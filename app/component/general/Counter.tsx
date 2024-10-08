@@ -1,10 +1,11 @@
 import { CardProductProps } from "../detail/DetailClient";
-
+// TypeScript'in interface özelliği, Counter bileşeninin alması gereken propsları tanımlamak için kullanılıyor. 
 interface CounterProps {
     cardProduct : CardProductProps,
-    increaseFunc: () =>  void;
+    increaseFunc: () =>  void;// increaseFuncdışaırdan bir parametre almıyor void ile
     decreaseFunc: () =>  void;
 }
+//bu class stok sayısını artırır ve azaltır.
 const Counter:React.FC<CounterProps> = ({cardProduct, increaseFunc, decreaseFunc}) => {
 
     const buttonStyle = "w-8 h-8 border flex items-center justify-center text-lg rounded-md"

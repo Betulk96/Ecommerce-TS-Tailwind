@@ -7,16 +7,21 @@ interface ButtonProps {
     small?: boolean
     outline? : boolean
     icon?: IconType
-    disabled?: boolean
+  disabled?: boolean
+  className?: string 
 }
-const Button:React.FC<ButtonProps> = ({text, onClick, small, outline, disabled, icon:Icon}) => {
+const Button: React.FC<ButtonProps> = ({ text, onClick, small, outline, disabled, icon: Icon, className }) => {
   return (
-        <button disabled={disabled} className={`my-1 flex items-center justify-center gap-2 rounded-lg p-3 ${small ? "w-[250px]" : "w-full"} ${outline ? "border text-black" : "bg-black text-white"}`} onClick={onClick}>
-           {Icon && <Icon/> }
-           {text}
-        </button>
-    
+      <button 
+          disabled={disabled} 
+          className={`my-1 flex items-center justify-center gap-2 rounded-lg p-3 ${small ? "w-[250px]" : "w-full"} ${outline ? "border text-black" : "bg-black text-white"} ${className}`} 
+          onClick={onClick}
+      >
+          {Icon && <Icon />}
+          {text}
+      </button>
   )
 }
+
 
 export default Button

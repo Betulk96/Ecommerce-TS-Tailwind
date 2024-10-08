@@ -1,4 +1,5 @@
-//import DetailClient from '@/app/components/detail/DetailClient';
+
+import DetailClient from '@/app/component/detail/DetailClient';
 import { products } from '@/utils/Products';
 import React from 'react'
 
@@ -14,7 +15,7 @@ const Detail = ({params}: {params: DetailProps}) => {
 
   return (
     <div>
-     {/*    <DetailClient product={product}/> */}
+         <DetailClient product={product}/>
     </div>
   )
 }

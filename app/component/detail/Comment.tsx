@@ -7,7 +7,7 @@ const Comment = ({prd}: {prd : any}) => {
 
   return (
     <div className='border w-full md:w-1/3 p-2 rounded-lg my-3'>
-       {/* <Avatar image={prd?.user?.image}/> */}
+       {/* <Avatar image={prd?.user?.image}/> eğer avatardinamikse bu şekilde kullanabiliriz */} 
        <div className='flex items-center gap-1'>
          <RxAvatar size="45"/>
          <div>
