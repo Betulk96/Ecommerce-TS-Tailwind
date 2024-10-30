@@ -1,6 +1,5 @@
 "use client"
 
-
 import PageContainer from "../containers/PageContainer"
 import Image from "next/image"
 import Button from "../general/Button"
@@ -40,7 +39,7 @@ const CartClient = () => {
                             </div>
                             <div className="w-1/5 text-orange-600 text-lg">{cart.price} ₺</div>
                             <div className="w-1/5">
-                                <Button  className="hover:bg-red-800" text="Ürünü Sil" small onClick={() => removeFromCart(cart)}/>
+                                <Button  className="hover:bg-red-800 w-4/5" text="Ürünü Sil" small onClick={() => removeFromCart(cart)}/>
                             </div>
                         </div>
                     ))

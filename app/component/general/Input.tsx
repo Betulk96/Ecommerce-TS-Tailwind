@@ -11,6 +11,7 @@ interface InputProps{
  register: UseFormRegister<FieldValues>
  errors: FieldErrors
 }
+/* ? = olabilir ve olmayabilir,isteğe bağlı */
 const Input:React.FC<InputProps> = ({
     id, placeholder, disabled, type, required, register, errors
 }) => {

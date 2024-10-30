@@ -5,19 +5,19 @@ import { createContext, useCallback, useContext, useEffect, useState } from "rea
 import toast from "react-hot-toast";
 
 interface CartContextProps {
- productCartQty: number //sepetteki ürün sayısı
- cartPrdcts: CardProductProps[] | null //ürün listesi
- addToBasket: (product: CardProductProps) => void //ürün ekleme
- addToBasketIncrease: (product: CardProductProps) => void //sepetteki ürün artırma
- addToBasketDecrease: (product: CardProductProps) => void //sepetteki ürün azaltma
- removeFromCart: (product: CardProductProps) => void //sepetteki ürün silme
- removeCart: () => void //sepetteki ürün listesini sıfırlama
+    productCartQty: number //sepetteki ürün sayısı
+    cartPrdcts: CardProductProps[] | null //ürün listesi
+    addToBasket: (product: CardProductProps) => void //ürün ekleme
+    addToBasketIncrease: (product: CardProductProps) => void //sepetteki ürün artırma
+    addToBasketDecrease: (product: CardProductProps) => void //sepetteki ürün azaltma
+    removeFromCart: (product: CardProductProps) => void //sepetteki ürün silme
+    removeCart: () => void //sepetteki ürün listesini sıfırlama
 }
 const CartContext = createContext<CartContextProps | null>(null)
 /* createContext=> React bileşenleri genellikle birbirlerinden bağımsız çalışır. Ancak bazen, bir bileşen tarafından yönetilen veriye, çok sayıda bileşenin erişmesi gerekebilir. Bu tür durumlarda Context API kullanılarak, bir "global state" oluşturulabilir ve bu veriler, uygulamanın herhangi bir yerinden erişilebilir hale getirilebilir. */
 
 
-interface Props{
+interface Props {
     [propName: string]: any
 }
 export const CartContextProvider = (props: Props) => {
@@ -26,59 +26,60 @@ export const CartContextProvider = (props: Props) => {
 
 
     useEffect(() => {
-       let getItem: any = localStorage.getItem('cart')
-       let getItemParse: CardProductProps[] | null = JSON.parse(getItem)
-       setCartPrdcts(getItemParse)
+        let getItem: any = localStorage.getItem('cart')
+        let getItemParse: CardProductProps[] | null = JSON.parse(getItem)
+        setCartPrdcts(getItemParse)
     }, [])
     /* useEffect: Sayfa yüklendiğinde, yerel depolama (localStorage) kontrol edilir 
     ve cart adlı veriyi alarak sepetteki ürünleri cartPrdcts state'ine set eder. */
-
+    //useCallback, React Hook'larından biridir ve fonksiyonun bellekte yeniden oluşturulmasını önlemek amacıyla kullanılır.
     const addToBasketIncrease = useCallback((product: CardProductProps) => {
-     let updatedCart;
-     if(product.quantity == 10){
-        return toast.error('Daha fazla ekleyemezsin...')
-     }
-     if(cartPrdcts){
-        updatedCart = [...cartPrdcts];
-        const existingItem = cartPrdcts.findIndex(item => item.id === product.id)
 
-        if(existingItem > -1){
-            updatedCart[existingItem].quantity = ++updatedCart[existingItem].quantity
+        let updatedCart;
+        if (product.quantity == 10) {
+            return toast.error('Daha fazla ekleyemezsin...')
         }
-        setCartPrdcts(updatedCart)
-        localStorage.setItem('cart', JSON.stringify(updatedCart))
-     }
+        if (cartPrdcts) {
+            updatedCart = [...cartPrdcts];
+            const existingItem = cartPrdcts.findIndex(item => item.id === product.id)
+
+            if (existingItem > -1) {
+                updatedCart[existingItem].quantity = ++updatedCart[existingItem].quantity
+            }
+            setCartPrdcts(updatedCart)
+            localStorage.setItem('cart', JSON.stringify(updatedCart))
+        }
     }, [cartPrdcts])
 
     const addToBasketDecrease = useCallback((product: CardProductProps) => {
         let updatedCart;
-        if(product.quantity == 1){
-           return toast.error('Daha az ekleyemezsin...')
+        if (product.quantity == 1) {
+            return toast.error('Daha az ekleyemezsin...')
         }
-        if(cartPrdcts){
-           updatedCart = [...cartPrdcts];
-           const existingItem = cartPrdcts.findIndex(item => item.id === product.id)
-   
-           if(existingItem > -1){
-               updatedCart[existingItem].quantity = --updatedCart[existingItem].quantity
-           }
-           setCartPrdcts(updatedCart)
-           localStorage.setItem('cart', JSON.stringify(updatedCart))
+        if (cartPrdcts) {
+            updatedCart = [...cartPrdcts];
+            const existingItem = cartPrdcts.findIndex(item => item.id === product.id)
+
+            if (existingItem > -1) {
+                updatedCart[existingItem].quantity = --updatedCart[existingItem].quantity
+            }
+            setCartPrdcts(updatedCart)
+            localStorage.setItem('cart', JSON.stringify(updatedCart))
         }
-       }, [cartPrdcts])
+    }, [cartPrdcts])
 
     const removeCart = useCallback(() => {
         setCartPrdcts(null)
         toast.success('Sepet Temizlendi...')
         localStorage.setItem('cart', JSON.stringify(null))
     }, [])
-  
+
     const addToBasket = useCallback((product: CardProductProps) => {
         setCartPrdcts(prev => {
             let updatedCart;
-            if(prev){
-                updatedCart = [...prev,product]
-            }else{
+            if (prev) {
+                updatedCart = [...prev, product]
+            } else {
                 updatedCart = [product]
             }
             toast.success('Ürün Sepete Eklendi...')
@@ -88,12 +89,12 @@ export const CartContextProvider = (props: Props) => {
     }, [cartPrdcts])
 
     const removeFromCart = useCallback((product: CardProductProps) => {
-        if(cartPrdcts){
-           const filteredProducts = cartPrdcts.filter(cart  => cart.id !== product.id)
+        if (cartPrdcts) {
+            const filteredProducts = cartPrdcts.filter(cart => cart.id !== product.id)
 
-           setCartPrdcts(filteredProducts)
-           toast.success('Ürün Sepetten Silindi...')
-           localStorage.setItem('cart', JSON.stringify(filteredProducts))
+            setCartPrdcts(filteredProducts)
+            toast.success('Ürün Sepetten Silindi...')
+            localStorage.setItem('cart', JSON.stringify(filteredProducts))
         }
     }, [cartPrdcts])
 
@@ -106,15 +107,15 @@ export const CartContextProvider = (props: Props) => {
         addToBasketIncrease,
         addToBasketDecrease
     }
-   return (
-       <CartContext.Provider value={value} {...props}/>
-   )
+    return (
+        <CartContext.Provider value={value} {...props} />
+    )
 }
 
 
 const UseCart = () => {
     const context = useContext(CartContext)
-    if(context == null){
+    if (context == null) {
         throw new Error('Bir hata durumu mevcut')
     }
     return context;//tüm sayfalarda kullanılabilir.
