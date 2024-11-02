@@ -48,6 +48,7 @@ const RegisterClient:React.FC<RegisterClientProps> = ({currentUser}) => {
         })
       }
 
+  //giriş yapılmışsa önceden hemen cart sayfasına yönlendir.
       useEffect(() => {
         if(currentUser){
          router.push('/cart')
